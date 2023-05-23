@@ -212,7 +212,7 @@
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group" style="display:none;" id="bloqueFecha">
                             <label for="exampleEmail22" class="mr-sm-2" id="label_fecha">Fecha</label>
                             <?php if ($_SESSION["type_user"] == '6') { ?>
-                                <input disabled onchange="selectDate(this.value)" class="form-control date-picker" id="date" name="date">
+                                <input disabled onchange="selectDate(this.value)" type="date" class="form-control" id="date" name="date">
                             <?php } else { ?>
                                 <input disabled onchange="selectDate(this.value)" type="date" class="form-control" id="date" name="date" max="<?= date('Y-m-d'); ?>">
                             <?php }; ?>
