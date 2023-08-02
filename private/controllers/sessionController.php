@@ -49,6 +49,8 @@ if (isset($_GET['mode'])) {
 					$name_codig = 'LAGIRALDA';
 				} elseif ($cod_serv == 9) {
 					$name_codig = 'MOVILNET';
+				} elseif ($cod_serv == 10) {
+					$name_codig = 'CEGESA';
 				} else {
 					$name_codig = 'ADMINOTRO';
 				}
