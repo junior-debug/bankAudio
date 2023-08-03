@@ -67,7 +67,7 @@
                 $('#date').removeAttr('disabled', 'disabled');
 
 
-            } else if (e == 'bancaasistencia' || e == 'fastpayment' || e == 'simpletv' || e == 'movilnet' || e == 'cegesa' ) {
+            } else if (e == 'bancaasistencia' || e == 'fastpayment' || e == 'simpletv' || e == 'movilnet' || e == 'CEGESA' ) {
                 $('#directorioDos').removeAttr('disabled', 'disabled');
                 $.ajax({
                     type: 'POST',
