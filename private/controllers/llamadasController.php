@@ -103,6 +103,7 @@ if (empty($_SESSION)) {
 				$telefono_filtro 		= 	$_POST['inputTelefono_filtroForm'];
 				$hora_filtro 			= 	$_POST['inputHora_filtroForm'];
 				$seg_filtro 			= 	$_POST['inputHoraSeg_filtroForm'];
+				$HoraSeg_filtro         =   $_POST['inputTiempo_filtroForm'];
 
 				if ($hora_filtro) {
 					$horaGeneral 			= 	$hora_filtro . ':' . $seg_filtro;
@@ -185,14 +186,23 @@ if (empty($_SESSION)) {
 						$abc = 99;
 						$total_result = 0;
 						if ($handle = opendir($resultados_consult)) {
+				
 							while ($entry = readdir($handle)) {
+	
 								if ($entry === "." || $entry === "..") {
 								} else {
-									//echo '<br> entryy: '.$entry.'<br>';
-									$total_result = $total_result + 1;
+
+									$countResult = $total_result;
+									
+	
+
+										$total_result = $total_result + 1;
+										echo $total_result;
+				
+
 								}
 							}
-							$countResult = $total_result;
+
 						} else {
 							$countResult = 0;
 						}
@@ -209,7 +219,7 @@ if (empty($_SESSION)) {
 						for ($i = 0; $i < count($resultados_consultCedula); $i++) {
 							$pos = strstr($resultados_consultCedula[$i], $telefono_filtro);
 							if ($pos) {
-								$resultados_consult[] = $resultados_consultCedula[$i];
+								$$resultados_consult[] = $resultados_consultCedula[$i];
 								//echo $resultados_consultCedula[$i].'<br>';
 							}
 						}
