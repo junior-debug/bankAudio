@@ -1,5 +1,171 @@
-<?php  
+<script type="text/javascript">
+    const currentTime = new Date()
+    const minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
+    const maxDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate()); // one day before next month
 
+    $(function() {
+        $('.date-picker').datepicker({
+            changeMonth: false,
+            changeYear: false,
+            showButtonPanel: false,
+            dateFormat: "yy-mm-dd",
+            minDate: minDate,
+            maxDate: maxDate,
+            onClose: function(dateText, inst) {
+                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+            }
+        });
+    });
+
+    function validateDate() {
+        /*if(document.getElementById("date").value == ""){
+            alert("Debe seleccionar una fecha para continuar.");
+            return false;
+
+        }else{*/
+        //alert('aquuiii')
+        cedula_input = $('#inputCedula_filtro').val();
+        telefono_input = $('#inputTelefono_filtro').val();
+        hora_input = $('#inputHora_filtro').val();
+        segundos_input = $('#inputHoraSeg_filtro').val();
+        durationAudio = $('#inputTiempo_filtro').val();
+
+
+        $('#inputCedula_filtroForm').val(cedula_input);
+        $('#inputTelefono_filtroForm').val(telefono_input);
+        $('#inputHora_filtroForm').val(hora_input);
+        $('#inputHoraSeg_filtroForm').val(segundos_input);
+        $('#inputTiempo_filtroForm').val(durationAudio);
+        //alert( cedula_input  + ' --> '+ telefono_input  + ' --> '+  hora_input+ ' --> '+  segundos_input)
+        //alert( $('#inputCedula_filtroForm').val()  + ' --> '+ $('#inputTelefono_filtroForm').val()  + ' --> '+  $('#inputHora_filtroForm').val() + ' --> '+  $('#inputHoraSeg_filtroForm').val() )
+
+        document.getElementById('form1').submit();
+        return false;
+        //}
+    }
+
+    function servicioSelectUno(e) {
+        //alert(e) 
+        if (e == 0) {
+            alert('Debe seleccionar un servicio');
+            //$('#btn-buscar').attr('disabled','disabled'); 
+
+            $('#label_campanasDirectorioDos_').hide();
+            $('#directorioDos').hide();
+            $('#bloqueFecha').hide();
+            $('#label_campana_Vicidial').hide();
+            $('#CampanaDirectorio').hide();
+            $('#date').val("");
+            $('#directorioDos').empty();
+            $('#CampanaDirectorio').empty();
+            $('#directorioDos').attr('disabled', 'disabled');
+            $('#date').attr('disabled', 'disabled');
+            $('#CampanaDirectorio').attr('disabled', 'disabled');
+
+        } else {
+            if (e == 'cocacola' || e == 'lagiralda' || e == 'herbalife') {
+                $('#date').val("");
+                $('#bloqueFecha').show();
+                $('#date').removeAttr('disabled', 'disabled');
+
+
+            } else if (e == 'bancaasistencia' || e == 'fastpayment' || e == 'simpletv' || e == 'movilnet' || e == 'cegesa' ) {
+                console.log(e)
+                $('#directorioDos').removeAttr('disabled', 'disabled');
+                $.ajax({
+                    type: 'POST',
+                    url: '?view=llamadas&mode=ServiceDos',
+                    dataType: "json",
+                    data: {
+                        servicioUno: $('#servicio_index').val()
+                    },
+                    success: function(datos) {
+                        //alert(datos.selectServicioDosDirectorio) 
+                        if (datos.resultRuta == 1) {
+                            $('#directorioDos').removeAttr('disabled', 'disabled');
+                            $('#label_campanasDirectorioDos_').show();
+                            $('#bloqueServiceDos').html(datos.selectServicioDosDirectorio)
+                        } else {
+                            alert(' No es una ruta válida');
+                            $('#date').attr('disabled', 'disabled');
+                            $('#CampanaDirectorio').attr('disabled', 'disabled');
+                            //$('#btn-buscar').attr('disabled','disabled');
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    function servicioSelectDos(e) {
+        //alert(e)
+        if (e == 0) {
+            alert('Debe seleccionar un servicio');
+            $('#bloqueFecha').hide();
+            $('#label_campana_Vicidial').hide();
+            $('#CampanaDirectorio').hide();
+            //$('#btn-buscar').attr('disabled','disabled'); 
+            $('#date').attr('disabled', 'disabled');
+            $('#CampanaDirectorio').attr('disabled', 'disabled');
+            $('#CampanaDirectorio').empty();
+
+        } else {
+            $('#date').val("");
+            $('#bloqueFecha').show();
+            $('#date').removeAttr('disabled', 'disabled');
+        }
+    }
+
+    function selectDate(e) {
+        //alert(e)
+        // alert( 'servicio: ' + $('#servicio_index').val() + 'servicio2: '+ $('#directorioDos').val() + 'fecha:'+ e )
+        if (e == 0) {
+            alert('Debe seleccionar una fecha');
+            //$('#btn-buscar').attr('disabled','disabled'); 
+            $('#label_campana_Vicidial').hide();
+            $('#CampanaDirectorio').hide();
+            $('#CampanaDirectorio').empty();
+            $('#CampanaDirectorio').attr('disabled', 'disabled');
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '?view=llamadas&mode=campanasSelect',
+                dataType: "json",
+                data: {
+                    servicio: $('#servicio_index').val(),
+                    servicio2: $('#directorioDos').val(),
+                    fecha: e
+                },
+                success: function(datos) {
+                    // alert(datos.CampanaDirectorio_) 
+                    if (datos.resultRuta == 1) {
+                        $('#label_campana_Vicidial').show();
+                        $('#CampanaDirectorio').removeAttr('disabled', 'disabled');
+                        $('#bloqueCampanasIndex').html(datos.CampanaDirectorio_)
+                    } else {
+                        alert(' No es una ruta válida');
+                        $('#CampanaDirectorio').attr('disabled', 'disabled');
+                        //$('#btn-buscar').attr('disabled','disabled');
+                    }
+                }
+            });
+        }
+    }
+
+    function selectcCampanaDirectorio(e) {
+        //alert(e)
+        if (e == 0) {
+            alert('Debe seleccionar una campaña');
+            //$('#btn-buscar').attr('disabled','disabled'); 
+            $('#bloqueCedula').hide();
+
+        } else {
+            $('#bloqueCedula').show();
+            //$('#btn-buscar').removeAttr('disabled','disabled'); 
+        }
+    }
+</script>
+<?php  
 include(__DIR__ . '/../../../src/Mp3info.php');
 use wapmorgan\Mp3Info\Mp3Info;
 ?>
@@ -18,7 +184,7 @@ use wapmorgan\Mp3Info\Mp3Info;
             </div>
         </div>
 
-
+        <?php /*if($_SESSION['cod_serv'] == 1){$directorio = "llamadas/hbl/";}else{$directorio = "../../../../audiobank-vicidial/simpletv/simpletv-atc/";}*/ ?>
 
         <div class="main-card mb-3 card">
             <div class="card-body">
@@ -219,175 +385,6 @@ use wapmorgan\Mp3Info\Mp3Info;
         z-index: 8;
     }
 </style>
-
-<script type="text/javascript">
-    const currentTime = new Date()
-    const minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
-    const maxDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate()); // one day before next month
-
-    $(function() {
-        $('.date-picker').datepicker({
-            changeMonth: false,
-            changeYear: false,
-            showButtonPanel: false,
-            dateFormat: "yy-mm-dd",
-            minDate: minDate,
-            maxDate: maxDate,
-            onClose: function(dateText, inst) {
-                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-            }
-        });
-    });
-
-    function validateDate() {
-        /*if(document.getElementById("date").value == ""){
-            alert("Debe seleccionar una fecha para continuar.");
-            return false;
-
-        }else{*/
-        //alert('aquuiii')
-        cedula_input = $('#inputCedula_filtro').val();
-        telefono_input = $('#inputTelefono_filtro').val();
-        hora_input = $('#inputHora_filtro').val();
-        segundos_input = $('#inputHoraSeg_filtro').val();
-        durationAudio = $('#inputTiempo_filtro').val();
-
-
-        $('#inputCedula_filtroForm').val(cedula_input);
-        $('#inputTelefono_filtroForm').val(telefono_input);
-        $('#inputHora_filtroForm').val(hora_input);
-        $('#inputHoraSeg_filtroForm').val(segundos_input);
-        $('#inputTiempo_filtroForm').val(durationAudio);
-        //alert( cedula_input  + ' --> '+ telefono_input  + ' --> '+  hora_input+ ' --> '+  segundos_input)
-        //alert( $('#inputCedula_filtroForm').val()  + ' --> '+ $('#inputTelefono_filtroForm').val()  + ' --> '+  $('#inputHora_filtroForm').val() + ' --> '+  $('#inputHoraSeg_filtroForm').val() )
-
-        document.getElementById('form1').submit();
-        return false;
-        //}
-    }
-
-    function servicioSelectUno(e) {
-        //alert(e) 
-        if (e == 0) {
-            alert('Debe seleccionar un servicio');
-            //$('#btn-buscar').attr('disabled','disabled'); 
-
-            $('#label_campanasDirectorioDos_').hide();
-            $('#directorioDos').hide();
-            $('#bloqueFecha').hide();
-            $('#label_campana_Vicidial').hide();
-            $('#CampanaDirectorio').hide();
-            $('#date').val("");
-            $('#directorioDos').empty();
-            $('#CampanaDirectorio').empty();
-            $('#directorioDos').attr('disabled', 'disabled');
-            $('#date').attr('disabled', 'disabled');
-            $('#CampanaDirectorio').attr('disabled', 'disabled');
-
-        } else {
-            if (e == 'cocacola' || e == 'lagiralda' || e == 'herbalife') {
-                $('#date').val("");
-                $('#bloqueFecha').show();
-                $('#date').removeAttr('disabled', 'disabled');
-
-
-            } else if (e == 'bancaasistencia' || e == 'fastpayment' || e == 'simpletv' || e == 'movilnet' || e == 'cegesa' ) {
-                console.log(e)
-                $('#directorioDos').removeAttr('disabled', 'disabled');
-                $.ajax({
-                    type: 'POST',
-                    url: '?view=llamadas&mode=ServiceDos',
-                    dataType: "json",
-                    data: {
-                        servicioUno: $('#servicio_index').val()
-                    },
-                    success: function(datos) {
-                        //alert(datos.selectServicioDosDirectorio) 
-                        if (datos.resultRuta == 1) {
-                            $('#directorioDos').removeAttr('disabled', 'disabled');
-                            $('#label_campanasDirectorioDos_').show();
-                            $('#bloqueServiceDos').html(datos.selectServicioDosDirectorio)
-                        } else {
-                            alert(' No es una ruta válida');
-                            $('#date').attr('disabled', 'disabled');
-                            $('#CampanaDirectorio').attr('disabled', 'disabled');
-                            //$('#btn-buscar').attr('disabled','disabled');
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    function servicioSelectDos(e) {
-        //alert(e)
-        if (e == 0) {
-            alert('Debe seleccionar un servicio');
-            $('#bloqueFecha').hide();
-            $('#label_campana_Vicidial').hide();
-            $('#CampanaDirectorio').hide();
-            //$('#btn-buscar').attr('disabled','disabled'); 
-            $('#date').attr('disabled', 'disabled');
-            $('#CampanaDirectorio').attr('disabled', 'disabled');
-            $('#CampanaDirectorio').empty();
-
-        } else {
-            $('#date').val("");
-            $('#bloqueFecha').show();
-            $('#date').removeAttr('disabled', 'disabled');
-        }
-    }
-
-    function selectDate(e) {
-        //alert(e)
-        // alert( 'servicio: ' + $('#servicio_index').val() + 'servicio2: '+ $('#directorioDos').val() + 'fecha:'+ e )
-        if (e == 0) {
-            alert('Debe seleccionar una fecha');
-            //$('#btn-buscar').attr('disabled','disabled'); 
-            $('#label_campana_Vicidial').hide();
-            $('#CampanaDirectorio').hide();
-            $('#CampanaDirectorio').empty();
-            $('#CampanaDirectorio').attr('disabled', 'disabled');
-        } else {
-            $.ajax({
-                type: 'POST',
-                url: '?view=llamadas&mode=campanasSelect',
-                dataType: "json",
-                data: {
-                    servicio: $('#servicio_index').val(),
-                    servicio2: $('#directorioDos').val(),
-                    fecha: e
-                },
-                success: function(datos) {
-                    // alert(datos.CampanaDirectorio_) 
-                    if (datos.resultRuta == 1) {
-                        $('#label_campana_Vicidial').show();
-                        $('#CampanaDirectorio').removeAttr('disabled', 'disabled');
-                        $('#bloqueCampanasIndex').html(datos.CampanaDirectorio_)
-                    } else {
-                        alert(' No es una ruta válida');
-                        $('#CampanaDirectorio').attr('disabled', 'disabled');
-                        //$('#btn-buscar').attr('disabled','disabled');
-                    }
-                }
-            });
-        }
-    }
-
-    function selectcCampanaDirectorio(e) {
-        //alert(e)
-        if (e == 0) {
-            alert('Debe seleccionar una campaña');
-            //$('#btn-buscar').attr('disabled','disabled'); 
-            $('#bloqueCedula').hide();
-
-        } else {
-            $('#bloqueCedula').show();
-            //$('#btn-buscar').removeAttr('disabled','disabled'); 
-        }
-    }
-</script>
-
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>

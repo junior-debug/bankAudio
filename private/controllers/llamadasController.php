@@ -186,23 +186,14 @@ if (empty($_SESSION)) {
 						$abc = 99;
 						$total_result = 0;
 						if ($handle = opendir($resultados_consult)) {
-				
 							while ($entry = readdir($handle)) {
-	
 								if ($entry === "." || $entry === "..") {
 								} else {
-
-									$countResult = $total_result;
-									
-	
-
-										$total_result = $total_result + 1;
-										echo $total_result;
-				
-
+									//echo '<br> entryy: '.$entry.'<br>';
+									$total_result = $total_result + 1;
 								}
 							}
-
+							$countResult = $total_result;
 						} else {
 							$countResult = 0;
 						}
@@ -219,7 +210,7 @@ if (empty($_SESSION)) {
 						for ($i = 0; $i < count($resultados_consultCedula); $i++) {
 							$pos = strstr($resultados_consultCedula[$i], $telefono_filtro);
 							if ($pos) {
-								$$resultados_consult[] = $resultados_consultCedula[$i];
+								$resultados_consult[] = $resultados_consultCedula[$i];
 								//echo $resultados_consultCedula[$i].'<br>';
 							}
 						}
@@ -317,6 +308,7 @@ if (empty($_SESSION)) {
 				include(HTML_DIR . 'llamadas/index.php');
 				include(PUBLIC_DIR . 'general/footer.php'); /*  */
 				break;
+
 
 
 
