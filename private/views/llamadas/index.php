@@ -21,15 +21,12 @@
         /*if(document.getElementById("date").value == ""){
             alert("Debe seleccionar una fecha para continuar.");
             return false;
-
         }else{*/
-        //alert('aquuiii')
         cedula_input = $('#inputCedula_filtro').val();
         telefono_input = $('#inputTelefono_filtro').val();
         hora_input = $('#inputHora_filtro').val();
         segundos_input = $('#inputHoraSeg_filtro').val();
         durationAudio = $('#inputTiempo_filtro').val();
-
 
         $('#inputCedula_filtroForm').val(cedula_input);
         $('#inputTelefono_filtroForm').val(telefono_input);
@@ -165,31 +162,35 @@
         }
     }
 </script>
+
 <?php  
-include(__DIR__ . '/../../../src/Mp3info.php');
-use wapmorgan\Mp3Info\Mp3Info;
+    include(__DIR__ . '/../../../src/Mp3info.php');
+    use wapmorgan\Mp3Info\Mp3Info;
 ?>
+
+<!-- Body -->
 <div class="app-main__outer">
     <div class="app-main__inner">
+        <!-- Header -->
         <div class="app-page-title">
             <div class="page-title-wrapper">
                 <div class="page-title-heading">
                     <div class="page-title-icon">
                         <i class="pe-7s-phone icon-gradient bg-premium-dark"></i>
                     </div>
-                    <div>
-                        Grabaciones
-                    </div>
+                    <div>Grabaciones</div>
                 </div>
             </div>
         </div>
 
         <?php /*if($_SESSION['cod_serv'] == 1){$directorio = "llamadas/hbl/";}else{$directorio = "../../../../audiobank-vicidial/simpletv/simpletv-atc/";}*/ ?>
 
+        <!-- Formulario -->
         <div class="main-card mb-3 card">
             <div class="card-body">
-                <h5 class="card-title">Seleccione la fecha a consultar </h5>
+                <h5 class="card-title">Seleccione la fecha a consultar</h5>
                 <div>
+                    <!-- Mitad 1 -->
                     <form name="form1" id="form1" method="POST" action="?view=llamadas&mode=result" class="form-inline">
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for="exampleEmail22" class="mr-sm-2">Servicio</label>
@@ -209,11 +210,13 @@ use wapmorgan\Mp3Info\Mp3Info;
                             </select>
                         </div>
 
+                        <!-- Campaña -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for="exampleEmail22" class="mr-sm-2" id="label_campanasDirectorioDos_" style="display:none;">Campaña</label>
                             <div id="bloqueServiceDos"></div>
                         </div>
 
+                        <!-- Fecha -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group" style="display:none;" id="bloqueFecha">
                             <label for="exampleEmail22" class="mr-sm-2" id="label_fecha">Fecha</label>
                             <?php if ($_SESSION["type_user"] == '6') { ?>
@@ -222,29 +225,73 @@ use wapmorgan\Mp3Info\Mp3Info;
                                 <input disabled onchange="selectDate(this.value)" type="date" class="form-control" id="date" name="date" max="<?= date('Y-m-d'); ?>">
                             <?php }; ?>
                         </div>
+
+                        <!-- Campaña_Vicidial -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for="exampleEmail22" class="mr-sm-2" id="label_campana_Vicidial" style="display:none;">Campaña_Vicidial</label>
                             <div id="bloqueCampanasIndex"></div>
                         </div>
-                        <input hidden type="text" class="form-control" id="inputCedula_filtroForm" name="inputCedula_filtroForm">
-                        <input hidden type="text" class="form-control" id="inputTelefono_filtroForm" name="inputTelefono_filtroForm">
-                        <input hidden type="text" class="form-control" id="inputHora_filtroForm" name="inputHora_filtroForm">
-                        <input hidden type="text" class="form-control" id="inputHoraSeg_filtroForm" name="inputHoraSeg_filtroForm">
-                        <input hidden type="text" class="form-control" id="inputTiempo_filtroForm" name="inputTiempo_filtroForm">
-                    </form><br>
 
+                        <!-- Cédula -->
+                        <input 
+                            hidden 
+                            type="text" 
+                            class="form-control" 
+                            id="inputCedula_filtroForm" 
+                            name="inputCedula_filtroForm"
+                        >
+                        <!-- Telefono -->
+                        <input 
+                            hidden 
+                            type="text" 
+                            class="form-control" 
+                            id="inputTelefono_filtroForm" 
+                            name="inputTelefono_filtroForm"
+                        >
+                        <!-- Hora -->
+                        <input 
+                            hidden 
+                            type="text" 
+                            class="form-control" 
+                            id="inputHora_filtroForm" 
+                            name="inputHora_filtroForm"
+                        >
+                        <!-- Segundos -->
+                        <input 
+                            hidden 
+                            type="text" 
+                            class="form-control" 
+                            id="inputHoraSeg_filtroForm" 
+                            name="inputHoraSeg_filtroForm"
+                        >
+                        <!-- Tiempo -->
+                        <input 
+                            hidden 
+                            type="text" 
+                            class="form-control" 
+                            id="inputTiempo_filtroForm" 
+                            name="inputTiempo_filtroForm"
+                        >
+                    </form>
+                    <!-- Divider -->
+                    <br><hr><br>
+                    <!-- Mitad 2 -->
                     <div class="form-inline">
+                        <!-- Cédula -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">Cédula</label>
                             <input type="number" class="form-control" id="inputCedula_filtro" name="inputCedula_filtro_"> <!-- placeholder="18005963"-->
                         </div>
+                        <!-- Télefono -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">Télefono</label>
                             <input type="number" class="form-control" id="inputTelefono_filtro" name="inputTelefono_filtro_"> <!-- placeholder="04144851233"-->
                         </div>
+                        <!-- Hora / Segundos -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">Hora</label>
                             <input type="time" class="form-control" id="inputHora_filtro" name="inputHora_filtro_"> <!-- placeholder="15:25:01"-->
+
                             <label style="margin-left: 5px;" for=" " class="mr-sm-2">Segundos</label>
                             <select class="form-control" id="inputHoraSeg_filtro" name="inputHoraSeg_filtro" required>
                                 <option value="00" selected>Seleccione...</option>
@@ -256,125 +303,123 @@ use wapmorgan\Mp3Info\Mp3Info;
                                     }
                                 } ?>
                             </select>
-
                         </div>
+                        <!-- Duración audio -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">tiempo duracion audio en segundos</label>
                             <input type="text" class="form-control" id="inputTiempo_filtro" name="inputTiempo_filtro"> <!-- placeholder="60"-->
                         </div>
 
+                        <!-- Search button -->
                         <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <button class="btn btn-primary" id="btn-buscar" onclick="return validateDate()">Buscar</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
 
-
+        <!-- Resultado -->
         <div class="main-card mb-3 card">
             <div class="card-body">
                 <div class="scroll-area-md">
-                    <div class="scrollbar-container">
-                        <h5 class="card-title">Grabaciones de la fecha <strong class="text-info"><?= $_POST['date']; ?></strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Total registro: <strong class="text-info"> <?php if ($abc == 88 || $abc == 100) {
-                                                                                                                                                                                                                    echo count($resultados_consult);
-                                                                                                                                                                                                                } else {
-                                                                                                                                                                                                                    echo $countResult;
-                                                                                                                                                                                                                } ?></strong></h5>
-                        <h5 class="card-title">Ruta <strong class="text-info"><?= $directorio; ?></strong></h5>
-                        <h5 class="card-title">Filtros <strong class="text-info"> <?php if ($abc == 88  || $abc == 100) {
-                                                                                        echo 'cedula: ' . $cedula_filtro . ' / ' . 'teléfono: ' . $telefono_filtro . ' / ' . 'Hora: ' . $horaGeneral;
-                                                                                    } ?> </strong></h5> <br>
+                    <div class="scrollbar-container">       
+                        <!-- Fecha / Totales -->
+                        <h5 class="card-title">
+                            <span>Grabaciones de la fecha </span>
+                            <strong class="text-info">
+                                <?= $_POST['date']; ?>
+                            </strong>
+                            <span class="pl-5">Total registro:</span>
+                            <strong class="text-info">
+                                <?php echo ($abc == 88 || $abc == 100) ? count($resultados_consult) : $countResult; ?>
+                            </strong>
+                        </h5>
 
+                        <!-- Ruta -->
+                        <h5 class="card-title">
+                            <span>Ruta</span>
+                            <strong class="text-info">
+                                <?= $directorio; ?>
+                            </strong>
+                        </h5>
+
+                        <!-- Filtros -->
+                        <h5 class="card-title">
+                            Filtros 
+                            <strong class="text-info"> 
+                                <?php echo ($abc == 88 || $abc == 100) ? 'cedula: ' . $cedula_filtro . ' / telefono: ' . $telefono_filtro . ' / Hora: ' . $horaGeneral : ''; ?>
+                            </strong>
+                        </h5> 
+                        
+                        <br>
+                        
+                        <!-- Audios -->
                         <div id="result">
-                            <?php //echo '<br> aquiiiii '.$abc.'<br>';
-                            /*    echo ' <br>  servicio_index: '. $_POST['servicio_index'].' <br> ';
-                                            echo ' <br>  CampanaDirectorio: '. $_POST['CampanaDirectorio'].' <br> ';
-
-                                        echo ' <br> date:  '. $date.' <br> ';
-                                        echo "../../../../audiobank-vicidial/simpletv/simpletv-atc".' <br><br> ';
-                                        echo ' <br> directorio:  '.$directorio.' <br><br> ';
-                                        echo  '/audiobank-vicidial/simpletv/simpletv-atc/2022/04/06/STVIVR';
-                                        echo $abc.'<br><br>';*/
-
-                            if ($abc == 88) {
-                                if ($resultados_consult) {
-                                    foreach ($resultados_consult as $key) {
-                                        $audioRuts = $key;
-                                        $audio = new Mp3Info($audioRuts);
-                                        if (empty($HoraSeg_filtro)) {
-                                            echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group"><div class="form-inline"><ol><a href="' . $directorio . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a></ol></div></div>';
-                                        } else if (floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
-                                            echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group"><div class="form-inline"><ol><a href="' . $directorio . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a></ol></div></div>';
-                                        }             
-                                    }
-                                } else {
-                                    echo '<h5 align="center" class="card-subtitle">Esta fecha no posee grabaciones registradas</h5>';
-                                }
-                            } else if ($abc == 100) {
-                                if ($resultados_consult) {
-                                    foreach ($resultados_consult as $key) {
-                                        $audioRuts = $key;
-                                        $audio = new Mp3Info($audioRuts);
-                                        if (empty($HoraSeg_filtro)) {
-                                            echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                                            <div class="form-inline">   
-                                                <ol><a href="' . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a></ol>
-                                            </div>
-                                        </div>';
-                                        }else if (floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
-                                            echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                                            <div class="form-inline">   
-                                                <ol><a href="' . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a></ol>
-                                            </div>
-                                        </div>';
-                                        }
-                                    }
-                                }
-                            } else if ($abc == 99) {
-
-                                if ($handle = opendir($resultados_consult)) {
-                                    
-                                    while ($entry = readdir($handle)) {
-                                        //echo $entry.'<br>';
-
-                                        if ($entry === "." || $entry === "..") {
-                                        } else {
-                                            $audioRuts = $resultados_consult.$entry;
-                                            $audio = new Mp3Info($audioRuts);
-                                            if (empty($HoraSeg_filtro)) {
+                            <?php
+                                if ($abc == 88) {
+                                    if ($resultados_consult) {
+                                        foreach ($resultados_consult as $key) {
+                                            $audio = new Mp3Info($key);
+                                            // Valida si el filtro está vacio o si es mayor al filtro.
+                                            if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
                                                 echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
                                                     <div class="form-inline">
                                                         <ol>
-                                                            <a href="' . $resultados_consult . $entry . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $entry . '</a>
+                                                            <a href="' . $directorio . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a>
                                                         </ol>
                                                     </div>
                                                 </div>';
-                                            } else if (floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
+                                            }
+                                        }
+                                    } else {
+                                        echo '<h5 align="center" class="card-subtitle">Esta fecha no posee grabaciones registradas</h5>';
+                                    }
+                                } 
+                                else if ($abc == 100) {
+                                    if ($resultados_consult) {
+                                        foreach ($resultados_consult as $key) {
+                                            $audio = new Mp3Info($key);
+                                            // Valida si el filtro está vacio o si es mayor al filtro.
+                                            if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
                                                 echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                                                <div class="form-inline">
-                                                    <ol>
-                                                        <a href="' . $resultados_consult . $entry . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $entry . '</a>
-                                                    </ol>
-                                                </div>
-                                            </div>';} 
+                                                    <div class="form-inline">   
+                                                        <ol><a href="' . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a></ol>
+                                                    </div>
+                                                </div>';
+                                            }
                                         }
                                     }
-                                } else {
-                                    echo '<h5 align="center" class="card-subtitle">Esta fecha no posee grabaciones registradas</h5>';
+                                } 
+                                else if ($abc == 99) {
+                                    if ($handle = opendir($resultados_consult)) {
+                                        while ($entry = readdir($handle)) {
+                                            if ($entry === "." || $entry === "..") {
+                                            } else {
+                                                $audioRuts = $resultados_consult.$entry;
+                                                $audio = new Mp3Info($audioRuts);
+                                                if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
+                                                    echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                                                        <div class="form-inline">
+                                                            <ol>
+                                                                <a href="' . $resultados_consult . $entry . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $entry . '</a>
+                                                            </ol>
+                                                        </div>
+                                                    </div>';
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        echo '<h5 align="center" class="card-subtitle">Esta fecha no posee grabaciones registradas</h5>';
+                                    }
+                                    closedir($handle);
                                 }
-                                closedir($handle);
-                            } else {
-                            }
-
                             ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
