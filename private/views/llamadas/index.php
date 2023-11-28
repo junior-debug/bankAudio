@@ -17,6 +17,19 @@
         });
     });
 
+    function showAudio(ruta){
+        let ruta_audio = document.getElementById(ruta);
+        let contenedores = document.getElementsByClassName('audio_container');
+
+        // Eliminar todos los audios abiertos previamente
+        for(let i = 0; i < contenedores.length; i++) {
+            contenedores[i].innerHTML = "";
+        }
+
+        // Abrir el nuevo audio
+        ruta_audio.innerHTML = "<audio src=" + ruta + " controls autoplay loop id='showAudio'></audio>";
+    }
+
     function validateDate() {
         /*if(document.getElementById("date").value == ""){
             alert("Debe seleccionar una fecha para continuar.");
@@ -360,13 +373,20 @@
                                 if ($abc == 88) {
                                     if ($resultados_consult) {
                                         foreach ($resultados_consult as $key) {
+                                            $audioRuts = $directorio.$key;
                                             $audio = new Mp3Info($key);
+
                                             // Valida si el filtro está vacio o si es mayor al filtro.
                                             if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
                                                 echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
                                                     <div class="form-inline">
-                                                        <ol>
-                                                            <a href="' . $directorio . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a>
+                                                        <ol class="row text-left">
+                                                            <div class="col">
+                                                                <button class="mr-2 btn btn-primary form-group" onclick="showAudio(\'' . $audioRuts . '\')">' . $key . '</button>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div id="' . $audioRuts . '" class="audio_container"></div>
+                                                            </div>
                                                         </ol>
                                                     </div>
                                                 </div>';
@@ -384,7 +404,14 @@
                                             if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
                                                 echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
                                                     <div class="form-inline">   
-                                                        <ol><a href="' . $key . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $key . '</a></ol>
+                                                        <ol class="row text-left">
+                                                            <div class="col">
+                                                                <button class="mr-2 btn btn-primary form-group" onclick="showAudio(\'' . $key . '\')">' . $key . '</button>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div id="' . $key . '" class="audio_container"></div>
+                                                            </div>
+                                                        </ol>
                                                     </div>
                                                 </div>';
                                             }
@@ -400,11 +427,14 @@
                                                 $audio = new Mp3Info($audioRuts);
                                                 if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
                                                     echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                                                        <div class="form-inline">
-                                                            <ol>
-                                                                <a href="' . $resultados_consult . $entry . '" class="mr-2 btn btn-primary form-group" target="_blank">' . $entry . '</a>
-                                                            </ol>
-                                                        </div>
+                                                        <ol class="row text-left">
+                                                            <div class="col">
+                                                                <button class="mr-2 btn btn-primary form-group" onclick="showAudio(\'' . $audioRuts . '\')">' . $entry . '</button>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div id="' . $audioRuts . '" class="audio_container"></div>
+                                                            </div>
+                                                        </ol>
                                                     </div>';
                                                 }
                                             }
