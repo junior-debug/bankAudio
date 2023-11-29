@@ -5,7 +5,7 @@ date_default_timezone_set('America/Caracas');
 #Constantes de conexión a BDD
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_PASS', 'prc333.c0m.v3');
 define('DB_NAME', 'audios_prc');
 define('DB_PORT', '3306');
 

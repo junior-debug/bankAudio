@@ -287,21 +287,21 @@
                         >
                     </form>
                     <!-- Divider -->
-                    <br><hr><br>
+                    <br>
                     <!-- Mitad 2 -->
                     <div class="form-inline">
                         <!-- Cédula -->
-                        <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
+                        <div class="mt-3 mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">Cédula</label>
                             <input type="number" class="form-control" id="inputCedula_filtro" name="inputCedula_filtro_"> <!-- placeholder="18005963"-->
                         </div>
                         <!-- Télefono -->
-                        <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
+                        <div class="mt-3 mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">Télefono</label>
                             <input type="number" class="form-control" id="inputTelefono_filtro" name="inputTelefono_filtro_"> <!-- placeholder="04144851233"-->
                         </div>
                         <!-- Hora / Segundos -->
-                        <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
+                        <div class="mt-3 mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">Hora</label>
                             <input type="time" class="form-control" id="inputHora_filtro" name="inputHora_filtro_"> <!-- placeholder="15:25:01"-->
 
@@ -318,13 +318,13 @@
                             </select>
                         </div>
                         <!-- Duración audio -->
-                        <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
+                        <div class="mt-3 mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <label for=" " class="mr-sm-2">tiempo duracion audio en segundos</label>
                             <input type="text" class="form-control" id="inputTiempo_filtro" name="inputTiempo_filtro"> <!-- placeholder="60"-->
                         </div>
 
                         <!-- Search button -->
-                        <div class="mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
+                        <div class="mt-3 mb-2 mr-sm-3 mb-sm-0 position-relative form-group">
                             <button class="btn btn-primary" id="btn-buscar" onclick="return validateDate()">Buscar</button>
                         </div>
                     </div>
