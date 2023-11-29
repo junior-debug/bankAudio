@@ -177,7 +177,7 @@
 </script>
 
 <?php  
-    include(__DIR__ . '/../../../src/Mp3info.php');
+    include(__DIR__ . '/../../../src/Mp3Info.php');
     use wapmorgan\Mp3Info\Mp3Info;
 ?>
 
