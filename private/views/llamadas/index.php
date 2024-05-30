@@ -35,11 +35,26 @@
             alert("Debe seleccionar una fecha para continuar.");
             return false;
         }else{*/
+
         cedula_input = $('#inputCedula_filtro').val();
         telefono_input = $('#inputTelefono_filtro').val();
         hora_input = $('#inputHora_filtro').val();
         segundos_input = $('#inputHoraSeg_filtro').val();
         durationAudio = $('#inputTiempo_filtro').val();
+        date = $('#date').val();
+        campana = $('#CampanaDirectorio').val();
+
+        if (cedula_input && date && campana == '0') {
+            alert('selecciones campaña')
+        }
+
+        if (telefono_input && date && campana == '0') {
+            alert('selecciones campaña')
+        }
+
+        if (telefono_input && cedula_input && date && campana == '0') {
+            alert('selecciones campaña')
+        }
 
         $('#inputCedula_filtroForm').val(cedula_input);
         $('#inputTelefono_filtroForm').val(telefono_input);
@@ -90,6 +105,7 @@
                         servicioUno: $('#servicio_index').val()
                     },
                     success: function(datos) {
+                        console.log(datos)
                         //alert(datos.selectServicioDosDirectorio) 
                         if (datos.resultRuta == 1) {
                             $('#directorioDos').removeAttr('disabled', 'disabled');
@@ -374,23 +390,20 @@
                                     if ($resultados_consult) {
                                         foreach ($resultados_consult as $key) {
                                             $audioRuts = $directorio.$key;
-                                            $audio = new Mp3Info($key);
-
                                             // Valida si el filtro está vacio o si es mayor al filtro.
-                                            if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
-                                                echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                                                    <div class="form-inline">
-                                                        <ol class="row text-left">
-                                                            <div class="col">
-                                                                <button class="mr-2 btn btn-primary form-group" onclick="showAudio(\'' . $audioRuts . '\')">' . $key . '</button>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div id="' . $audioRuts . '" class="audio_container"></div>
-                                                            </div>
-                                                        </ol>
-                                                    </div>
-                                                </div>';
-                                            }
+                                            
+                                            echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                                                <div class="form-inline">
+                                                    <ol class="row text-left">
+                                                        <div class="col">
+                                                            <button class="mr-2 btn btn-primary form-group btn-fixed-width" onclick="showAudio(\'' . $audioRuts . '\')">' . $key . '</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div id="' . $audioRuts . '" class="audio_container"></div>
+                                                        </div>
+                                                    </ol>
+                                                </div>
+                                            </div>';                  
                                         }
                                     } else {
                                         echo '<h5 align="center" class="card-subtitle">Esta fecha no posee grabaciones registradas</h5>';
@@ -399,22 +412,23 @@
                                 else if ($abc == 100) {
                                     if ($resultados_consult) {
                                         foreach ($resultados_consult as $key) {
-                                            $audio = new Mp3Info($key);
-                                            // Valida si el filtro está vacio o si es mayor al filtro.
-                                            if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
-                                                echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                                                    <div class="form-inline">   
-                                                        <ol class="row text-left">
-                                                            <div class="col">
-                                                                <button class="mr-2 btn btn-primary form-group" onclick="showAudio(\'' . $key . '\')">' . $key . '</button>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div id="' . $key . '" class="audio_container"></div>
-                                                            </div>
-                                                        </ol>
-                                                    </div>
-                                                </div>';
+ 
+                                            $lastSlashPos = strrpos($key, '/');
+                                            if ($lastSlashPos !== false) {
+                                                $lastSlashPos = substr($key, $lastSlashPos + 1);
                                             }
+                                            echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                                                <div class="form-inline">   
+                                                    <ol class="row text-left">
+                                                        <div class="col">
+                                                            <button class="mr-2 btn btn-primary form-group btn-fixed-width" onclick="showAudio(\'' . $key . '\')">' . $lastSlashPos . '</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div id="' . $key . '" class="audio_container"></div>
+                                                        </div>
+                                                    </ol>
+                                                </div>
+                                            </div>';
                                         }
                                     }
                                 } 
@@ -424,19 +438,16 @@
                                             if ($entry === "." || $entry === "..") {
                                             } else {
                                                 $audioRuts = $resultados_consult.$entry;
-                                                $audio = new Mp3Info($audioRuts);
-                                                if (empty($HoraSeg_filtro) || floor($audio->duration / 60 * 60) > $HoraSeg_filtro) {
-                                                    echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                                                        <ol class="row text-left">
-                                                            <div class="col">
-                                                                <button class="mr-2 btn btn-primary form-group" onclick="showAudio(\'' . $audioRuts . '\')">' . $entry . '</button>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div id="' . $audioRuts . '" class="audio_container"></div>
-                                                            </div>
-                                                        </ol>
-                                                    </div>';
-                                                }
+                                                echo '<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                                                    <ol class="row text-left">
+                                                        <div class="col">
+                                                            <button class="mr-2 btn btn-primary form-group btn-fixed-width" onclick="showAudio(\'' . $audioRuts . '\')">' . $entry . '</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div id="' . $audioRuts . '" class="audio_container"></div>
+                                                        </div>
+                                                    </ol>
+                                                </div>';
                                             }
                                         }
                                     } else {
@@ -459,6 +470,14 @@
     #ui-datepicker-div {
         z-index: 8;
     }
+
+    .btn-fixed-width {
+    width: 380px!important; /* Ajusta este valor según sea necesario */
+    white-space: nowrap!important;
+    overflow: hidden!important;
+    text-overflow: ellipsis!important;
+    }
+
 </style>
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
