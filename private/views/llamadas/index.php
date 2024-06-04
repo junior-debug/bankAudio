@@ -94,8 +94,7 @@
                 $('#date').removeAttr('disabled', 'disabled');
 
 
-            } else if (e == 'bancaasistencia' || e == 'fastpayment' || e == 'simpletv' || e == 'movilnet' || e == 'cegesa' ) {
-                console.log(e)
+            } else if (e == 'bancaasistencia' || e == 'fastpayment' || e == 'simpletv' || e == 'movilnet' || e == 'cegesa' || e == 'cashea' || e == 'cvg' || e == 'fiat') {
                 $('#directorioDos').removeAttr('disabled', 'disabled');
                 $.ajax({
                     type: 'POST',

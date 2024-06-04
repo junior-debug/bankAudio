@@ -51,10 +51,15 @@ if (isset($_GET['mode'])) {
 					$name_codig = 'MOVILNET';
 				} elseif ($cod_serv == 10) {
 					$name_codig = 'CEGESA';
+				} elseif ($cod_serv == 11) {
+					$name_codig = 'FIAT';
+				} elseif ($cod_serv == 12) {
+					$name_codig = 'CASHEA';
+				} elseif ($cod_serv == 13) {
+					$name_codig = 'CVG'; 
 				} else {
 					$name_codig = 'ADMINOTRO';
 				}
-
 				if ($status == 'INACTIVO') {
 					echo 3;
 				} else {
